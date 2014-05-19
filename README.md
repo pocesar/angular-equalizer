@@ -1,7 +1,9 @@
 Angular Equalizer
 =================
 
-Equalize the height of a set of random elements, without necessarily having a common parent.
+Equalize the height of a set of random elements, without necessarily having a common parent, container, etc. 
+
+You can add and remove items on demand using the `EqualizeState` service. 
 
 ### Usage
 
@@ -9,6 +11,15 @@ Add it to your dependencies
 
 ```js
 angular.module('yourapp', ['ngEqualizer']);
+
+angular.directive('yourDirective', ['EqualizeState', function(EqualizeState){
+  return {
+    link: function(scope, el, attr){
+      EqualizeState.add('yourDirective', el);
+      EqualizeState.add('yourDirective', angular.element('<div/>'));
+    }
+  };
+}]);
 ```
 
 Use it in your elements/directives
