@@ -3,7 +3,7 @@ Angular Equalizer
 
 Equalize the height of a set of random elements, without necessarily having a common parent, container, etc. 
 
-You can add and remove items on demand using the `EqualizeState` service. 
+You can add and remove items on demand using the `EqualizerState` service. 
 
 ### Usage
 
@@ -16,11 +16,11 @@ angular.module('yourapp', ['ngEqualizer']);
 Use it in your directive
 
 ```js
-angular.module('yourapp').directive('yourDirective', ['EqualizeState', function(EqualizeState){
+angular.module('yourapp').directive('yourDirective', ['EqualizerState', function(EqualizerState){
   return {
     link: function(scope, el, attr){
-      EqualizeState.add('yourDirective', el);
-      EqualizeState.add('yourDirective', angular.element('<div/>'));
+      EqualizerState.add('yourDirective', el);
+      EqualizerState.add('yourDirective', angular.element('<div/>'));
     }
   };
 }]);
@@ -36,7 +36,7 @@ Or use it directly in your elements
 
 ### Dependencies
 
-Needs jQuery and Lodash/Underscore (for the debounce function)
+Needs jQuery and Lo-dash/Underscore (for the debounce function)
 
 ### License 
 
