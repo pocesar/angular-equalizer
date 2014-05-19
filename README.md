@@ -11,8 +11,12 @@ Add it to your dependencies
 
 ```js
 angular.module('yourapp', ['ngEqualizer']);
+```
 
-angular.directive('yourDirective', ['EqualizeState', function(EqualizeState){
+Use it in your directive
+
+```js
+angular.module('yourapp').directive('yourDirective', ['EqualizeState', function(EqualizeState){
   return {
     link: function(scope, el, attr){
       EqualizeState.add('yourDirective', el);
@@ -22,7 +26,7 @@ angular.directive('yourDirective', ['EqualizeState', function(EqualizeState){
 }]);
 ```
 
-Use it in your elements/directives
+Or use it directly in your elements
 
 ```html
 <div equalizer="group"></div>
@@ -32,7 +36,7 @@ Use it in your elements/directives
 
 ### Dependencies
 
-Needs jQuery and Lodash/Underscore
+Needs jQuery and Lodash/Underscore (for the debounce function)
 
 ### License 
 
