@@ -17,9 +17,7 @@
           }
           for (_j = 0, _len1 = item.length; _j < _len1; _j++) {
             i = item[_j];
-            console.log('a', i.element.outerHeight());
             maxHeight = Math.max(maxHeight, i.element.outerHeight());
-            console.log('b', maxHeight);
           }
           if (maxHeight > 0) {
             for (_k = 0, _len2 = item.length; _k < _len2; _k++) {
