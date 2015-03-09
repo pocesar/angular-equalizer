@@ -17,12 +17,12 @@
           }
           for (_j = 0, _len1 = item.length; _j < _len1; _j++) {
             i = item[_j];
-            maxHeight = Math.max(maxHeight, i.element.outerHeight());
+            maxHeight = Math.max(maxHeight, angular.element(i.element).prop('offsetHeight'));
           }
           if (maxHeight > 0) {
             for (_k = 0, _len2 = item.length; _k < _len2; _k++) {
               i = item[_k];
-              i.element.css('minHeight', maxHeight);
+              i.element.css('minHeight', maxHeight+'px');
             }
           }
         };
