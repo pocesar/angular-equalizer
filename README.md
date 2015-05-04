@@ -29,14 +29,16 @@ angular.module('yourapp').directive('yourDirective', ['EqualizerState', function
 Or use it directly in your elements
 
 ```html
-<div equalizer="group"></div>
-<div equalizer="group" ng-repeat="item in items"></div>
-<div equalizer="group" ng-if="current"></div>
+<div equalizer="'group'"></div>
+<div equalizer="'group'" ng-repeat="item in items"></div>
+<div equalizer="'group'" ng-if="current"></div>
 ```
+
+Elements must have an initial height and must not be hidden (their height is set to 0)
 
 ### Dependencies
 
-Needs jQuery and Lo-dash/Underscore (for the debounce function)
+Needs jQuery
 
 ### License 
 
