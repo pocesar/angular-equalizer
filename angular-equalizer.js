@@ -1,87 +1,124 @@
-  angular.module('ngEqualizer', []).factory('EqualizerState', [
-    '$window', function($window) {
-      var equalize, items;
-      items = {};
-      $window = $($window);
-      equalize = _.debounce(function() {
-        var item, name, _fn;
-        _fn = function(item, name) {
-          var i, maxHeight, _i, _j, _k, _len, _len1, _len2;
-          maxHeight = 0;
-          for (_i = 0, _len = item.length; _i < _len; _i++) {
-            i = item[_i];
-            i.element.css({
-              'minHeight': i.minHeight,
-              'height': 'auto'
-            });
-          }
-          for (_j = 0, _len1 = item.length; _j < _len1; _j++) {
-            i = item[_j];
-            maxHeight = Math.max(maxHeight, i.element.outerHeight());
-          }
-          if (maxHeight > 0) {
-            for (_k = 0, _len2 = item.length; _k < _len2; _k++) {
-              i = item[_k];
-              i.element.css('minHeight', maxHeight);
+(function(){
+var ngEqualizer;
+(function (ngEqualizer) {
+    'use strict';
+    var Services;
+    (function (Services) {
+        var EqualizerState = (function () {
+            function EqualizerState($window) {
+                var _this = this;
+                this.items = {};
+                this.updating = false;
+                var _window = $($window);
+                this.equalize = function (time) {
+                    function fn(item) {
+                        var maxHeight;
+                        maxHeight = 0;
+                        _.forEach(item, function (i) {
+                            i.element.css({
+                                'minHeight': i.minHeight,
+                                'height': 'auto'
+                            });
+                        });
+                        _.forEach(item, function (i) {
+                            maxHeight = Math.max(maxHeight, i.element.outerHeight());
+                        });
+                        if (maxHeight > 0) {
+                            _.forEach(item, function (i) {
+                                i.element.css(i.method, maxHeight);
+                            });
+                        }
+                    }
+                    _.forEach(_this.items, fn);
+                    _this.updating = false;
+                };
+                _window.on({
+                    'resize': function () {
+                        _this.request();
+                    }
+                });
             }
-          }
-        };
-        for (name in items) {
-          item = items[name];
-          _fn(item, name);
-        }
-      }, 30);
-      $window.on('resize', equalize);
-      return {
-        get: function(group) {
-          return items[group] || [];
-        },
-        add: function(group, element) {
-          if (!angular.isArray(items[group])) {
-            items[group] = [];
-          }
-          items[group].push({
-            height: element.css('height') || 'auto',
-            minHeight: element.css('minHeight') || 0,
-            element: element
-          });
-          equalize();
-          return this;
-        },
-        remove: function(group, element) {
-          var i, key, _ref;
-          _ref = items[group];
-          for (key in _ref) {
-            i = _ref[key];
-            if (i.element === element) {
-              element.css({
-                'minHeight': i.minHeight,
-                'height': i.height
-              });
-              items[group].splice(key, 1);
-              break;
+            EqualizerState.prototype.get = function (group) {
+                return this.items[group] || [];
+            };
+            EqualizerState.prototype.request = function () {
+                if (this.updating === false) {
+                    requestAnimationFrame(this.equalize);
+                    this.updating = true;
+                }
+            };
+            EqualizerState.prototype.add = function (group, element, method) {
+                if (method === void 0) { method = 'minHeight'; }
+                if (!angular.isArray(this.items[group])) {
+                    this.items[group] = [];
+                }
+                this.items[group].push({
+                    height: element.css('height') || 'auto',
+                    minHeight: element.css('minHeight') || '0',
+                    method: method,
+                    element: element
+                });
+                this.request();
+                return this;
+            };
+            EqualizerState.prototype.remove = function (group, element) {
+                var _this = this;
+                _.forEach(this.items[group], function (i, key) {
+                    if (i.element === element) {
+                        element.css({
+                            'minHeight': i.minHeight,
+                            'height': i.height
+                        });
+                        _this.items[group].splice(key, 1);
+                        return false;
+                    }
+                });
+                return this;
+            };
+            EqualizerState.$inject = ['$window'];
+            return EqualizerState;
+        })();
+        Services.EqualizerState = EqualizerState;
+    })(Services = ngEqualizer.Services || (ngEqualizer.Services = {}));
+    var Controllers;
+    (function (Controllers) {
+        var Equalizer = (function () {
+            function Equalizer(EqualizerState) {
+                this.EqualizerState = EqualizerState;
             }
-          }
-          return this;
-        },
-        equalize: equalize
-      };
-    }
-  ]).directive('equalizer', [
-    'EqualizerState', function(EqualizerState) {
-      return {
-        restrict: 'A',
-        link: function(scope, el, attr) {
-          var group;
-          group = scope.$eval(attr.equalizer);
-          EqualizerState.add(group, el);
-          el.on('$destroy', function() {
-            EqualizerState.remove(group, el);
-          });
-          scope.$on('$destroy', function() {
-            EqualizerState.remove(group, el);
-          });
-        }
-      };
-    }
-  ]);
+            Equalizer.prototype.add = function (scope, group, el, method) {
+                var _this = this;
+                this.EqualizerState.add(group, el, method);
+                el.on('$destroy', function () {
+                    _this.EqualizerState.remove(group, el);
+                });
+                scope.$on('$destroy', function () {
+                    _this.EqualizerState.remove(group, el);
+                });
+            };
+            Equalizer.$inject = ['EqualizerState'];
+            return Equalizer;
+        })();
+        Controllers.Equalizer = Equalizer;
+    })(Controllers || (Controllers = {}));
+    var Directives;
+    (function (Directives) {
+        var Equalizer = (function () {
+            function Equalizer() {
+                this.restrict = 'A';
+                this.controller = Controllers.Equalizer;
+            }
+            Equalizer.prototype.link = function (scope, el, attr, ctrl) {
+                var group = scope.$eval(attr['equalizer']);
+                ctrl.add(scope, group, el, attr['equalizerMethod']);
+            };
+            Equalizer.instance = function () {
+                var _this = this;
+                return [function () { return new _this(); }];
+            };
+            return Equalizer;
+        })();
+        Directives.equalizer = Equalizer.instance();
+    })(Directives || (Directives = {}));
+    angular.module('ngEqualizer', []).service(Services).directive(Directives);  
+})();
