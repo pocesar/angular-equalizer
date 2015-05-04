@@ -38,7 +38,7 @@ Elements must have an initial height and must not be hidden (their height is set
 
 ### Dependencies
 
-Needs jQuery
+Needs jQuery. Uses `requestAnimationFrame`, use a polyfill if you must
 
 ### License 
 
