@@ -120,7 +120,7 @@
             })();
             Directives.equalizer = Equalizer.instance();
         })(Directives || (Directives = {}));
+        
+        angular.module('ngEqualizer', []).service(Services).directive(Directives);
     })(ngEqualizer || (ngEqualizer = {}));
-
-    angular.module('ngEqualizer', []).service(Services).directive(Directives);  
 })();
