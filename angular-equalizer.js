@@ -14,22 +14,22 @@
                         function fn(item) {
                             var maxHeight;
                             maxHeight = 0;
-                            _.forEach(item, function (i) {
+                            angular.forEach(item, function (i) {
                                 i.element.css({
                                     'minHeight': i.minHeight,
                                     'height': 'auto'
                                 });
                             });
-                            _.forEach(item, function (i) {
+                            angular.forEach(item, function (i) {
                                 maxHeight = Math.max(maxHeight, i.element.outerHeight());
                             });
                             if (maxHeight > 0) {
-                                _.forEach(item, function (i) {
+                                angular.forEach(item, function (i) {
                                     i.element.css(i.method, maxHeight);
                                 });
                             }
                         }
-                        _.forEach(_this.items, fn);
+                        angular.forEach(_this.items, fn);
                         _this.updating = false;
                     };
                     _window.on({
