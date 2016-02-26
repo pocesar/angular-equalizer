@@ -63,7 +63,7 @@
                 };
                 EqualizerState.prototype.remove = function (group, element) {
                     var _this = this;
-                    _.forEach(this.items[group], function (i, key) {
+                    angular.forEach(this.items[group], function (i, key) {
                         if (i.element === element) {
                             element.css({
                                 'minHeight': i.minHeight,
