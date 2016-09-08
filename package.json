@@ -1,0 +1,42 @@
+{
+  "name": "angular-equalizer",
+  "version": "4.0.0",
+  "description": "Equalize the height of a set of random elements, without necessarily having a common parent, container, etc.",
+  "main": "angular-equalizer.js",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pocesar/angular-equalizer.git"
+  },
+  "keywords": [
+    "angularjs",
+    "equalize",
+    "equalizer",
+    "height",
+    "equalizer",
+    "jquery",
+    "height",
+    "min-height"
+  ],
+  "typings": "angular-equalizer.d.ts",
+  "author": "Paulo Cesar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pocesar/angular-equalizer/issues"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.34",
+    "@types/angular": "^1.5.13",
+    "@types/jquery": "^1.10.31",
+    "lodash": "^4.15.0",
+    "jquery": "^3.1.0",
+    "angular": "^1.5.8"
+  },
+  "devDependencies": {
+    "typescript": "^2.0.0"
+  },
+  "homepage": "https://github.com/pocesar/angular-equalizer#readme"
+}

@@ -3,6 +3,10 @@
   "description": "Equalize the height of a set of random elements, without necessarily having a common parent, container, etc",
   "main": "./angular-equalizer.js",
   "license": "./LICENSE",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
   "keywords": ["angularjs","equalize","equalizer","height equalizer","jquery","height","min-height"],
   "dependencies": {
     "angular": "1.x",
