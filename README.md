@@ -1,9 +1,9 @@
 Angular Equalizer
 =================
 
-Equalize the height of a set of random elements, without necessarily having a common parent, container, etc. 
+Equalize the height of a set of random elements, without necessarily having a common parent, container, etc.
 
-You can add and remove items on demand using the `EqualizerState` service. 
+You can add and remove items on demand using the `EqualizerState` service.
 
 ### Usage
 
@@ -38,8 +38,8 @@ Elements must have an initial height and must not be hidden (their height is set
 
 ### Dependencies
 
-Needs jQuery. Uses `requestAnimationFrame`, use a polyfill if you must
+Needs jQuery and Lodash. Also, uses `requestAnimationFrame`, use a polyfill if you must
 
-### License 
+### License
 
 MIT
